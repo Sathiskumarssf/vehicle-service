@@ -38,13 +38,15 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/v1/auth/login", formData);
+      console.log('Form Data:', formData); // Log form data for debugging
+      const res = await axios.post("http://localhost:5000/api/auth/login", formData);
       console.log(res.data);
       localStorage.setItem("token", res.data.token);
-      navigate('/home');
-    } catch (err) {
+      navigate('/ReservationForm');
+  } catch (err) {
       console.error(err.response?.data?.message || "Login failed");
-    }
+  }
+  
   };
 
   return (

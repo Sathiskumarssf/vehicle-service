@@ -1,10 +1,12 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+ 
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const JWT_SECRET = process.env.JWT_SECRET || 'sathis000';
 
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
+ 
 
 // Register
 router.post('/register', async (req, res) => {
@@ -34,12 +36,16 @@ router.post('/register', async (req, res) => {
 // Login
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
+ 
+    if (!email || !password) {
+        return res.status(400).json({ message: 'Email and password are required' });
+    }
 
     try {
         // Check if the user exists
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ message: 'Invalid credentials' });
+            return res.status(404).json({ message: 'User not found' });
         }
 
         // Validate the password
@@ -53,11 +59,15 @@ router.post('/login', async (req, res) => {
 
         res.json({ token });
     } catch (error) {
+        console.error('Login error:', error);
         res.status(500).json({ message: 'Server error' });
     }
 });
 
+
 // Verify Token Middleware
+ 
+
 const verifyToken = (req, res, next) => {
     const token = req.header('Authorization')?.split(' ')[1];
 
@@ -70,8 +80,11 @@ const verifyToken = (req, res, next) => {
         req.user = decoded;
         next();
     } catch (error) {
+        console.error('Token verification error:', error.message); // Log the error
         res.status(401).json({ message: 'Token is not valid' });
     }
 };
 
+
 module.exports = router;
+ 
