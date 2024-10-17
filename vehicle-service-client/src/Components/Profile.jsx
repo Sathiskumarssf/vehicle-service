@@ -12,6 +12,19 @@ const Profile = () => {
   const [error, setError] = useState(null);
   const token = localStorage.getItem("token");
 
+    // Handle reservation deletion
+    const handleDelete = async (reservationId) => {
+      try {
+        await axios.delete(
+          `http://localhost:5000/api/reservations/${reservationId}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        // Update state to remove the deleted reservation
+        setReservations(reservations.filter(reservation => reservation.id !== reservationId));
+      } catch (err) {
+        setError(err.message || 'Error deleting reservation');
+      }
+    };
   // Fetch user information and reservations
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -38,21 +51,9 @@ const Profile = () => {
     if (email) {
       fetchUserInfo();
     }
-  }, [email]);
+  }, [email,handleDelete]);
 
-  // Handle reservation deletion
-  const handleDelete = async (reservationId) => {
-    try {
-      await axios.delete(
-        `http://localhost:5000/api/reservations/${reservationId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      // Update state to remove the deleted reservation
-      setReservations(reservations.filter(reservation => reservation.id !== reservationId));
-    } catch (err) {
-      setError(err.message || 'Error deleting reservation');
-    }
-  };
+ 
 
   // Display loading or error messages
   if (loading) {
