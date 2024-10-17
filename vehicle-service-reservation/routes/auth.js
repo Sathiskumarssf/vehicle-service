@@ -4,10 +4,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const JWT_SECRET = process.env.JWT_SECRET || 'sathis000';
-
+const verifyToken = require('../middleware/auth');
 const router = express.Router();
  
-router.post('/getUsernameByEmail', async (req, res) => {
+router.post('/getUsernameByEmail',  async (req, res) => {
     const { email } = req.body; // Get email from the request body
     
     if (!email) {
@@ -66,7 +66,7 @@ router.post('/register', async (req, res) => {
 
 
 
-router.post('/userdetails', async (req, res) => {
+router.post('/userdetails',   async (req, res) => {
   const { email } = req.body;
   if (!email) {
     return res.status(400).json({ message: 'Email is required' });
@@ -115,29 +115,6 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
-
-
-// Verify Token Middleware
- 
-
-const verifyToken = (req, res, next) => {
-    const token = req.header('Authorization')?.split(' ')[1];
-
-    if (!token) {
-        return res.status(401).json({ message: 'No token, authorization denied' });
-    }
-
-    try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        req.user = decoded;
-        next();
-    } catch (error) {
-        console.error('Token verification error:', error.message); // Log the error
-        res.status(401).json({ message: 'Token is not valid' });
-    }
-};
-
- 
 
 
 module.exports = router;
