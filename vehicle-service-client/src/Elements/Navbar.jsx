@@ -50,20 +50,20 @@ const Navbar = () => {
             </li>
             <li className="md:ml-4">
               <Link
-                to="/services"
+                to="/ReservationList"
                 className="block text-white py-2 px-4 hover:bg-blue-700 rounded"
                 onClick={() => setIsOpen(false)}
               >
-                Services
+                ReservationList
               </Link>
             </li>
             <li className="md:ml-4">
               <Link
-                to="/contact"
+                to="/profile"
                 className="block text-white py-2 px-4 hover:bg-blue-700 rounded"
                 onClick={() => setIsOpen(false)}
               >
-                Contact
+                profile
               </Link>
             </li>
           </ul>

@@ -4,6 +4,8 @@ import './index.css';
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import ReservationForm from "./Components/ReservationForm";
+import ReservationList from "./Components/ReservationList";
+import Profile from './Components/Profile';
  
 
 function App() {
@@ -13,7 +15,9 @@ function App() {
      
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/ReservationForm" element={<ReservationForm />} />
+        <Route path="/ReservationForm" element={<ReservationForm /> } />  
+        <Route path="/ReservationList" element={<ReservationList /> } />  
+        <Route path="/Profile" element={<Profile /> } />  
         
 
     

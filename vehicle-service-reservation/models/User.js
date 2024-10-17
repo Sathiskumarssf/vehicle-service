@@ -15,6 +15,14 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    contactNumber: {
+        type: String,  // Change int to String
+        required: true,
+    },
+    country: {
+        type: String,
+        required: true,
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', UserSchema);

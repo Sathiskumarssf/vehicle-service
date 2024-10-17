@@ -30,9 +30,10 @@ router.post('/getUsernameByEmail', async (req, res) => {
     }
   });
   
-// Register
+
 router.post('/register', async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, contactNumber, country } = req.body;
+    console.log(username, email, password, contactNumber, country );
 
     try {
         // Check if the user already exists
@@ -46,14 +47,43 @@ router.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // Create a new user
-        const newUser = new User({ username, email, password: hashedPassword });
+        const newUser = new User({ 
+            username, 
+            email, 
+            password: hashedPassword,
+            contactNumber,
+            country 
+        });
+
         await newUser.save();
 
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
+        console.error(error); // Log the error for debugging
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+
+
+router.post('/userdetails', async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required' });
+  }
+
+  try {
+    const user = await User.findOne({ email }).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 
 // Login
 router.post('/login', async (req, res) => {
@@ -106,6 +136,8 @@ const verifyToken = (req, res, next) => {
         res.status(401).json({ message: 'Token is not valid' });
     }
 };
+
+ 
 
 
 module.exports = router;
