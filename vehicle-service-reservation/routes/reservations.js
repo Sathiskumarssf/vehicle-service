@@ -32,12 +32,15 @@ router.get('/', verifyToken, async (req, res) => {
 
 // Delete a reservation
 router.delete('/:id', verifyToken, async (req, res) => {
-    try {
-        await Reservation.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: 'Reservation deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error deleting reservation' });
-    }
+  try {
+      const reservation = await Reservation.findByIdAndDelete(req.params.id);
+      if (!reservation) {
+          return res.status(404).json({ message: 'Reservation not found' });
+      }
+      res.status(200).json({ message: 'Reservation deleted successfully' });
+  } catch (error) {
+      res.status(500).json({ message: 'Error deleting reservation', error: error.message });
+  }
 });
 
 router.post('/reservationinfo', async (req, res) => {

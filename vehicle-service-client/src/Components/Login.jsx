@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../Elements/Navbar";
+import NavbarforHome from "../Elements/NavbarforHome";
 
 const Login = () => {
   const navigate = useNavigate(); 
@@ -53,7 +53,7 @@ const Login = () => {
   return (
      
     <div>
-      <Navbar/>
+      <NavbarforHome/>
        <div className="flex flex-col items-center bg-blue-300 justify-center min-h-[90vh]">
        
        <div className="bg-gray-200  pr-24 pl-24 pt-10 pb-10 rounded-3xl flex flex-col items-center justify-center">

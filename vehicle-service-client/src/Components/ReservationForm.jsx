@@ -6,10 +6,10 @@ import Navbar from '../Elements/Navbar';
 import { useLocation } from "react-router-dom";
  
 
-const ReservationForm = ({ token, fetchReservations }) => {
+const ReservationForm = ({}) => {
   const location = useLocation();
   const email = location.state?.email;
-
+  const token = localStorage.getItem("token");
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     username: '', // Initialize username as an empty string
@@ -24,7 +24,7 @@ const ReservationForm = ({ token, fetchReservations }) => {
   useEffect(() => {
     if (email) {
 
-      axios.post('http://localhost:5000/api/auth/getUsernameByEmail', { email }) // Use POST request
+      axios.post('http://localhost:5000/api/auth/getUsernameByEmail', { email },{ headers: { Authorization: `Bearer ${token}` } }) // Use POST request
         .then(response => {
           console.log(response.data.username);
           setFormData(prevFormData => ({
@@ -73,7 +73,7 @@ const ReservationForm = ({ token, fetchReservations }) => {
 
   return (
     <div>
-      <Navbar />
+     <Navbar email={email} />
       <div className="flex flex-col items-center bg-blue-300 justify-center min-h-[90vh]">
         <div className="bg-gray-200 p-5 rounded-3xl flex flex-col items-center justify-center w-full max-w-lg">
           <h2 className="text-2xl font-bold mb-6 text-center">Reserve Vehicle Service</h2>

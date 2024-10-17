@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import Navbar from "../Elements/Navbar";
+import NavbarforHome from "../Elements/NavbarforHome";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ const Register = () => {
 
   return (
     <div>
-      <Navbar />
+      <NavbarforHome />
       <div className="flex flex-col items-center bg-blue-300 justify-center min-h-[90vh]">
         <div className="bg-gray-200 pr-24 pl-24 pt-10 pb-10 rounded-3xl flex flex-col items-center justify-center">
           <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>

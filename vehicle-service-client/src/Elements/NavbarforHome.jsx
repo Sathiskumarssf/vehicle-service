@@ -1,7 +1,8 @@
+ 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Navbar = ({ email }) => {
+const NavbarforHome = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -37,41 +38,26 @@ const Navbar = ({ email }) => {
         </div>
         <div className={`md:flex ${isOpen ? 'block' : 'hidden'} w-full md:w-auto`}>
           <ul className="md:flex md:items-center">
-
+            
             <li className="md:ml-4">
-              <Link to={{
-                  pathname: "/ReservationForm",
-                }}
-                state={{ email }} // Pass the email as state
+              <Link
+                to="/"
                 className="block text-white py-2 px-4 hover:bg-blue-700 rounded"
                 onClick={() => setIsOpen(false)}
               >
-                ReservationForm
+                Home
               </Link>
             </li>
             <li className="md:ml-4">
-              <Link to={{
-                  pathname: "/ReservationList",
-                }}
-                state={{ email }} // Pass the email as state
+              <Link
+                to="/ReservationList"
                 className="block text-white py-2 px-4 hover:bg-blue-700 rounded"
                 onClick={() => setIsOpen(false)}
               >
                 ReservationList
               </Link>
             </li>
-            <li className="md:ml-4">
-              <Link
-                to={{
-                  pathname: "/profile",
-                }}
-                state={{ email }} // Pass the email as state
-                className="block text-white py-2 px-4 hover:bg-blue-700 rounded"
-                onClick={() => setIsOpen(false)}
-              >
-                Profile
-              </Link>
-            </li>
+            
           </ul>
         </div>
       </div>
@@ -79,4 +65,4 @@ const Navbar = ({ email }) => {
   );
 };
 
-export default Navbar;
+export default NavbarforHome;

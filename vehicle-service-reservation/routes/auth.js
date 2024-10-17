@@ -4,10 +4,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const JWT_SECRET = process.env.JWT_SECRET || 'sathis000';
-const verifyToken = require('../middleware/auth');
 const router = express.Router();
- 
-router.post('/getUsernameByEmail',  async (req, res) => {
+const verifyToken = require('../middleware/auth');
+
+router.post('/getUsernameByEmail',verifyToken,  async (req, res) => {
     const { email } = req.body; // Get email from the request body
     
     if (!email) {
@@ -66,7 +66,7 @@ router.post('/register', async (req, res) => {
 
 
 
-router.post('/userdetails',   async (req, res) => {
+router.post('/userdetails', verifyToken,  async (req, res) => {
   const { email } = req.body;
   if (!email) {
     return res.status(400).json({ message: 'Email is required' });
