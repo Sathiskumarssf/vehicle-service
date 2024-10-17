@@ -26,8 +26,8 @@ const verifyToken = (req, res, next) => {
 
 // Create a new reservation
 router.post('/', async (req, res) => {
-    const { date, time, location, vehicleNo, mileage, message } = req.body;
-    const reservation = new Reservation({ username: req.user.username, date, time, location, vehicleNo, mileage, message });
+    const { username,date, time, location, vehicleNo, mileage, message } = req.body;
+    const reservation = new Reservation({ username, date, time, location, vehicleNo, mileage, message });
 
     try {
         await reservation.save();

@@ -9,6 +9,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  
 
   const [errors, setErrors] = useState({});
   const { email, password } = formData;
@@ -42,7 +43,7 @@ const Login = () => {
       const res = await axios.post("http://localhost:5000/api/auth/login", formData);
       console.log(res.data);
       localStorage.setItem("token", res.data.token);
-      navigate('/ReservationForm');
+      navigate('/ReservationForm', { state: { email } });
   } catch (err) {
       console.error(err.response?.data?.message || "Login failed");
   }

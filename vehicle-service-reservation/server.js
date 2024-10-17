@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors'); // Import cors middleware
 const authRoutes = require('./routes/auth'); // Import the authentication routes
 const reservationRoutes=require('./routes/reservations')
-
+const User = require('./models/User');
 dotenv.config();
 
 const app = express();
@@ -26,6 +26,7 @@ mongoose.connect(process.env.MONGO_URI, {
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/reservations', reservationRoutes);
+
 
 // Start the server
 app.listen(PORT, () => {

@@ -7,7 +7,29 @@ const JWT_SECRET = process.env.JWT_SECRET || 'sathis000';
 
 const router = express.Router();
  
-
+router.post('/getUsernameByEmail', async (req, res) => {
+    const { email } = req.body; // Get email from the request body
+    
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
+  
+    try {
+      // Find user by email
+      const user = await User.findOne({ email });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      // Return the username
+      res.json({ username: user.username });
+    } catch (err) {
+      console.error('Error fetching user:', err);
+      res.status(500).json({ error: 'Server error' });
+    }
+  });
+  
 // Register
 router.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
